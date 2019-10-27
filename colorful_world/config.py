@@ -8,7 +8,7 @@ class Config(object):
             batch_size=14,
             use_L1_loss=True,
             lambda_L1 = 10,
-            image_size=[250,250],
+            image_size=[256,256],
             train_dir='...',
             model_dir='...',
             test_dir='...',

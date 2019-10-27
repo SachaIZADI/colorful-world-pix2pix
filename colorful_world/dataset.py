@@ -3,7 +3,7 @@ import torch
 from torch.utils.data import Dataset
 from PIL import Image
 import numpy as np
-from .config import Config
+from colorful_world.config import Config
 
 config = Config()
 
