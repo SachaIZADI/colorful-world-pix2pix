@@ -16,7 +16,7 @@ class Config(object):
             predicted_dir='...',
             save_frequency=10,
             gpu=False,
-            lfw_root_dir="/Users/sachaizadi/Documents/Projets/colorful-world/colorful-world/data/lfw",
+            lfw_root_dir="/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw",
     ):
 
         self.lr_dis = lr_dis

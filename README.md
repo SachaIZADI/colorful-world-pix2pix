@@ -12,7 +12,7 @@ chmod +x download_data.sh #Rq: you might not need this
 colorful-world/data/download_data.sh
 ```
 
-We designed a `pytorch Dataset` to handle the generation training samples. 
+We designed a `pytorch Dataset` to handle the generation of training samples. 
 It takes a colored image and transforms it into a black & white image.
 
 <img src = "/media/color2black&white.png" height="250">
