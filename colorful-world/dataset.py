@@ -1,78 +1,87 @@
 import os
 import torch
 from torch.utils.data import Dataset
-import cv2
+from PIL import Image
+import numpy as np
 from config import Config
 
 config = Config()
 
 
-class Dataset_Color(Dataset):
-    '''
-    Data pipeline of colored images to train the model
-    '''
+class DatasetColorBW(Dataset):
 
-    def __init__(self, root_dir):
-        """
-        root_dir (string): Directory with all the images.
-        """
+    def __init__(self, root_dir: str, colored: bool = True, bw: bool = True):
         self.root_dir = root_dir
         self.image_files = os.listdir(self.root_dir)
+        self.colored = colored
+        self.bw = bw
 
     def __len__(self):
         return len(self.image_files)
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int):
         file = os.path.join(self.root_dir, self.image_files[idx])
-        clr, bw = self.generate_data(file, config.image_size)
+
+        clr, bw = self.generate_data(
+            file=file,
+            img_size=config.image_size,
+            colored=self.colored,
+            bw=self.bw
+        )
+
         sample = {'clr': clr, 'bw': bw}
+
         return sample
 
-    def generate_data(self, file, size):
-        '''
-        Convert RGB images to black and white (bw)
-        '''
+    def generate_data(self, file: str, img_size: [int, int], colored: bool, bw: bool):
 
-        img = cv2.imread(file)
-        img = cv2.resize(img, (size, size))
+        img_clr = Image.open(file)
+        img_clr = img_clr.resize(img_size)
 
-        clr = img
-        bw = cv2.cvtColor(clr, cv2.COLOR_BGR2GRAY)
-        # Scale the images to [-1, 1] as suggested by the pix2pix authors
-        clr = ((clr / 256) - 0.5) * 2.0
-        bw = ((bw / 256) - 0.5) * 2.0
-        clr = torch.from_numpy(clr).type(torch.FloatTensor).resize_(3, size, size)
-        bw = torch.from_numpy(bw).type(torch.FloatTensor).resize_(1, size, size)
+        if colored:
+            img_clr_array = np.array(img_clr)
+            # Scale the images to [-1, 1]
+            img_clr_array = ((img_clr_array / 256) - 0.5) * 2.0
+            img_clr_tensor = torch.from_numpy(img_clr_array).type(torch.FloatTensor) #.resize_(3, size, size)
 
-        return clr, bw
+        else:
+            img_clr_tensor = None
+
+        if bw:
+            img_bw = img_clr.convert('L')
+            img_bw_array = np.array(img_bw)
+            # Scale the images to [-1, 1]
+            img_bw_array = ((img_bw_array / 256) - 0.5) * 2.0
+            img_bw_tensor = torch.from_numpy(img_bw_array).type(torch.FloatTensor)  # .resize_(3, size, size)
+
+        else:
+            img_bw_tensor = None
+
+        return img_clr_tensor, img_bw_tensor
 
 
-class Dataset_BW(Dataset):
-    '''
-    Data pipeline of black&white images to train the model
-    '''
+if __name__ == "__main__":
 
-    def __init__(self, root_dir):
-        """
-        root_dir (string): Directory with all the images.
-        """
-        self.root_dir = root_dir
-        self.image_files = os.listdir(self.root_dir)
+    dataset_bw_clr = DatasetColorBW(
+        root_dir=config.lfw_root_dir
+    )
 
-    def __len__(self):
-        return len(self.image_files)
+    print("------ Dataset with colored and black & white pictures ------")
+    print(f"len(dataset) = {len(dataset_bw_clr)}")
+    sample = dataset_bw_clr.__getitem__(0)
+    print(f"bw_tensor.shape = {sample['bw'].shape}")
+    print(f"clr_tensor.shape = {sample['clr'].shape}")
 
-    def __getitem__(self, idx):
-        file = os.path.join(self.root_dir, self.image_files[idx])
-        clr, bw = self.generate_data(file, config.image_size)
-        sample = {'clr': clr, 'bw': bw}
-        return sample
+    img_bw = Image.fromarray(
+        (sample['bw'].numpy()/2 + 0.5) * 256
+    )
+    img_bw.show()
 
-    def generate_data(self, file, size):
-        img = cv2.imread(file, 0)
-        img = cv2.resize(img, (size, size))
-        bw = img
-        # Scale the images to [-1, 1] as suggested by the pix2pix authors
-        bw = ((bw / 256) - 0.5) * 2.0
-        bw = torch.from_numpy(bw).type(torch.FloatTensor).resize_(1, size, size)
-        return bw, bw
+    img_clr = Image.fromarray(
+        np.uint8((sample['clr'].numpy() / 2 + 0.5) * 256)
+    )
+    img_clr.show()
+
+
+
+
