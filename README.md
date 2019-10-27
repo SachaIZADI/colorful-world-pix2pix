@@ -1,7 +1,17 @@
 Hello world
 
-# Data:
-- http://vis-www.cs.umass.edu/lfw/#download
+## Data:
+We trained our Colorizer model with face picture from the open-source dataset (*Labeled Faces in the Wild*)[http://vis-www.cs.umass.edu/lfw/] (LFW). 
+It contains more than 13,000 images of faces collected from the web.
+
+To download the dataset you can use the shell script from `colorful-world/data/download_data.sh` 
+
+```
+cd colorful-world/data
+chmod +x download_data.sh #Rq: you might not need this
+colorful-world/data/download_data.sh
+```
+
 
 # Model:
 - https://arxiv.org/pdf/1611.07004.pdf
