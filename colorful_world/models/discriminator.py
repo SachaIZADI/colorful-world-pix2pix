@@ -42,8 +42,6 @@ class Discriminator(nn.Module):
         )
 
 
-    # TODO: check the forward method
-
     def forward(self, clr, bw):
         cat_clr_bw = torch.cat((clr, bw), 1)
         print(cat_clr_bw.shape)

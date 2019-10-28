@@ -1,8 +1,6 @@
 from colorful_world.dataset import DatasetColorBW
 from colorful_world.models import Discriminator
 from colorful_world.config import Config
-import numpy as np
-from PIL import Image
 
 
 def main():
@@ -19,12 +17,12 @@ def main():
     print(sample["clr"].shape)
 
     prediction = discriminator(
-        clr=sample["clr"],
-        bw=sample["bw"]
+        clr=sample["clr"].unsqueeze(0),
+        bw=sample["bw"].unsqueeze(0)
     )
 
-    print(prediction.shape)
-
+    print(f"discriminator_output.shape = {prediction.shape}")
+    print(f"discriminator_output = {prediction}")
 
 
 if __name__ == "__main__":
