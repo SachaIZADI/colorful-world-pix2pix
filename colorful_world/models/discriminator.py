@@ -45,9 +45,10 @@ class Discriminator(nn.Module):
     # TODO: check the forward method
 
     def forward(self, clr, bw):
-        conc_clr_bw = torch.cat((clr, bw), 1)
-        result = self.conv(conc_clr_bw)
-        result = result.view(-1, int(self.image_size / (2 ** 5)) * int(self.image_size / (2 ** 5) * 1))
-        result = self.fc(result)
-        result = torch.sigmoid(result)
-        return result
+        cat_clr_bw = torch.cat((clr, bw), 1)
+        print(cat_clr_bw.shape)
+        features = self.conv(cat_clr_bw)
+        flatten = features.view(-1, int(self.image_size / (2 ** 5)) * int(self.image_size / (2 ** 5) * 1))
+        result = self.fc(flatten)
+        output = torch.sigmoid(result)
+        return output

@@ -19,12 +19,12 @@ def main():
     print(f"clr_tensor.shape = {sample['clr'].shape}")
 
     img_bw = Image.fromarray(
-        (sample['bw'].numpy()/2 + 0.5) * 256
+        (sample['bw'][0].numpy()/2 + 0.5) * 256
     )
     img_bw.show()
 
     img_clr = Image.fromarray(
-        np.uint8((sample['clr'].numpy() / 2 + 0.5) * 256)
+        np.uint8((sample['clr'].permute(1, 2, 0).numpy() / 2 + 0.5) * 256)
     )
     img_clr.show()
 

@@ -15,14 +15,14 @@ def main():
     )
     sample = dataset_bw_clr.__getitem__(0)
     bw_tensor = sample["bw"]
-    bw_tensor = bw_tensor.unsqueeze(0).unsqueeze(0)
+    bw_tensor = bw_tensor.unsqueeze(0)
 
     print(f"input_tensor_shape = {bw_tensor.shape}")
     output = generator(bw_tensor)
     print(f"output_tensor_shape = {output.shape}")
 
     img_bw = Image.fromarray(
-        (sample['bw'].numpy()/2 + 0.5) * 256
+        (sample['bw'][0].numpy()/2 + 0.5) * 256
     )
     img_bw.show()
 

@@ -42,7 +42,8 @@ class DatasetColorBW(Dataset):
             img_clr_array = np.array(img_clr)
             # Scale the images to [-1, 1]
             img_clr_array = ((img_clr_array / 256) - 0.5) * 2.0
-            img_clr_tensor = torch.from_numpy(img_clr_array).type(torch.FloatTensor) #.resize_(3, size, size)
+            # tensor shape 3 (channels) x img_size x img_size
+            img_clr_tensor = torch.from_numpy(img_clr_array).type(torch.FloatTensor).permute(2, 0, 1)
 
         else:
             img_clr_tensor = None
@@ -52,7 +53,8 @@ class DatasetColorBW(Dataset):
             img_bw_array = np.array(img_bw)
             # Scale the images to [-1, 1]
             img_bw_array = ((img_bw_array / 256) - 0.5) * 2.0
-            img_bw_tensor = torch.from_numpy(img_bw_array).type(torch.FloatTensor)  # .resize_(3, size, size)
+            # tensor shape 1 (channel) x img_size x img_size
+            img_bw_tensor = torch.from_numpy(img_bw_array).type(torch.FloatTensor).unsqueeze(0)
 
         else:
             img_bw_tensor = None
