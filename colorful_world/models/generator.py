@@ -12,7 +12,6 @@ class Generator(nn.Module):
         # input = bs x 256 x 256 x 1  / output = bs x 128 x 128 x 64
         self.encod1 = nn.Sequential(
             nn.Conv2d(in_channels=1, out_channels=64, kernel_size=4, padding=1, stride=2),
-            nn.LeakyReLU(negative_slope=0.2),
         )
         # input = bs x 128 x 128 x 64  / output = bs x 64 x 64 x 128
         self.encod2 = nn.Sequential(
@@ -107,7 +106,7 @@ class Generator(nn.Module):
         )
         # input = bs x 128 x 128 x 2*64 / output = bs x 256 x 256 x 3
         self.decodout = nn.Sequential(
-            nn.ConvTranspose2d(in_channels=2 * 64, out_channels=3, kernel_size=1, padding=0, output_padding=1, stride=2),
+            nn.ConvTranspose2d(in_channels=2 * 64, out_channels=3, kernel_size=4, padding=1, stride=2),
             nn.Tanh())
 
     def forward(self, x: torch.Tensor):

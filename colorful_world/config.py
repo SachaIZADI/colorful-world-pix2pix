@@ -10,7 +10,7 @@ class Config(object):
             batch_size=4,
             use_L1_loss=True,
             lambda_L1=1,
-            image_size=256,
+            image_size=512,
             train_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw_small',
             model_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/models/models_saved',
             test_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw_small',

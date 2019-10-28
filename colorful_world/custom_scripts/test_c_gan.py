@@ -13,7 +13,8 @@ def main():
         cgan.train()
     if predict:
         imgs = cgan.predict()
-        imgs[0].show()
+        for img in imgs:
+            img.show()
 
 
 if __name__ == "__main__":

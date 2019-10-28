@@ -13,9 +13,6 @@ def main():
     )
     sample = dataset_bw_clr.__getitem__(0)
 
-    print(sample["bw"].shape)
-    print(sample["clr"].shape)
-
     prediction = discriminator(
         clr=sample["clr"].unsqueeze(0),
         bw=sample["bw"].unsqueeze(0)

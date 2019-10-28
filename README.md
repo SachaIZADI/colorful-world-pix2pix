@@ -25,28 +25,18 @@ title={Image-to-Image Translation with Conditional Adversarial Networks},
     author={Phillip Isola and Jun-Yan Zhu and Tinghui Zhou and Alexei A. Efros},
     year={2016},
 
+# Objective function
 
 # TODO:
-
-- Model doesn't work, check why:
-    - loss function not the good one
-    - no alternate training
-    - model is bad
-    - conv transpose is ill parametered
-    - pb with filters and tensor shape
-    - pb with the data loader ? 
-    - pb when concat ?
-    - padding="SAME"
-    - pq ça reste noir ??
-
-- Read/find pix2pix paper
-- Compare with existing implementations
-    - https://github.com/SachaIZADI/Colorful-World/blob/master/TensorFlow_implementation/model.py
-    - https://github.com/znxlwm/pytorch-pix2pix/blob/master/network.py
+- Core project:
+    - plot model architecture
+    - create a function to save & plot the loss
+    - create a function to save the evolution of the colorization of an image
     
-
-
 - Work with collab
+    - create a script to clone the project
+    - create a script to launch the training
+
 - Pay a AWS server to train / and predict
 
 
