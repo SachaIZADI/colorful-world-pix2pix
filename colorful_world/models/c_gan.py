@@ -116,8 +116,7 @@ class cGAN(object):
             size = 0
 
             for data in data_loader:
-                # colored images, black & white images
-                # NB: colored image are real images (not generated ones)
+
                 clr_img, bw_img = data['clr'], data['bw']
 
                 if use_gpu:
@@ -169,11 +168,9 @@ class cGAN(object):
             dis_loss[epoch_num] = epoch_dis_loss
             gen_loss[epoch_num] = epoch_gen_loss
 
-            if (epoch_num + 1) % 1 == 0 and epoch_num != 0:
-                print(
-                    'Train - Discriminator Loss: {:.4f} Generator Loss: {:.4f}'.format(epoch_dis_loss, epoch_gen_loss))
+            print('Train - Discriminator Loss: {:.4f} Generator Loss: {:.4f}'.format(epoch_dis_loss, epoch_gen_loss))
 
-            if self.config.show_color_evolution and t%2 == 1:
+            if self.config.show_color_evolution and t % 2 == 1:
                 Gx_example = gen_model(bw_example).detach()
                 Gx_example_img = Image.fromarray(
                     np.uint8((Gx_example[0].permute(1, 2, 0).numpy() / 2 + 0.5) * 256)
@@ -183,17 +180,10 @@ class cGAN(object):
                     format="png"
                 )
 
-            """
-            if (epoch_num + 1) % self.config.save_frequency == 0 and epoch_num != 0:
-                if not os.path.exists(self.config.model_dir):
-                    os.makedirs(self.config.model_dir)
+            if (epoch_num % 10 == 0 and epoch_num != 0) or epoch_num == n_epochs-1:
                 torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
                 torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
                 print("Saved Model")
-            """
-        torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
-        torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
-        print("Saved Model")
 
         if self.config.plot_loss:
             fig = plt.figure()
@@ -244,16 +234,7 @@ class cGAN(object):
             for i in range(len(fake_img)):
                 img_array = fake_img.cpu().numpy()[i].transpose(1, 2, 0)
                 img_array = (((img_array / 2.0 + 0.5) * 256).astype('uint8'))
-                '''
-                red = img[:, :, 2].copy()
-                blue = img[:, :, 1].copy()
-                green = img[:, :, 0].copy()
-                img[:, :, 0] = red
-                img[:, :, 1] = blue
-                img[:, :, 2] = green
-                '''
                 img = Image.fromarray(img_array)
                 imgs.append(img)
-
 
         return imgs
