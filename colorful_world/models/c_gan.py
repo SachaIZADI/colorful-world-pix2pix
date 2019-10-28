@@ -4,21 +4,22 @@ from colorful_world.models import Discriminator, Generator
 
 
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 import torch.nn as nn
 from torch import optim
-import torch.nn.functional as F
 import numpy as np
 import os
+from PIL import Image
 
 
 
 class cGAN(object):
 
-    def __init__(self, config):
+    def __init__(self, config: Config):
         self.config = config
         self.data_init()
         self.model_init()
+        self.is_trained = False
 
     def data_init(self):
         self.training_dataset = DatasetColorBW(self.config.train_dir)
@@ -58,28 +59,30 @@ class cGAN(object):
 
     # ------------------------------
 
-    """
-    
     def train(self):
         return self.training(
             dis_model=self.dis_model, 
             gen_model=self.gen_model,
             data_loader=self.training_data_loader,
-            dis_optimizer=self.optimizer_dis, gen_optimizer=self.optimizer_gen,
+            dis_optimizer=self.optimizer_dis,
+            gen_optimizer=self.optimizer_gen,
             n_epochs=self.config.n_epochs,
-            L1_loss=self.L1_loss, lambda_L1=self.lambda_L1
+            L1_loss=self.L1_loss,
+            lambda_L1=self.lambda_L1
         )
 
-    def training(self, dis_model, gen_model, data_loader,
-                 dis_optimizer, gen_optimizer, n_epochs=1,
-                 L1_loss=None, lambda_L1=1):
-        '''
-        Training loop for the GAN
-        '''
+    def training(
+            self,
+            dis_model: Discriminator, gen_model: Generator,
+            data_loader: DataLoader,
+            dis_optimizer: torch.optim, gen_optimizer: torch.optim,
+            n_epochs: int = 1,
+            L1_loss: nn.L1Loss = None, lambda_L1: float = 1.
+    ):
 
         EPS = 1e-12
 
-        use_gpu = torch.cuda.is_available()
+        use_gpu = self.config.gpu
         if use_gpu:
             torch.cuda.set_device(0)
             dis_model = dis_model.cuda()
@@ -116,11 +119,11 @@ class cGAN(object):
                 dis_optimizer.zero_grad()
                 gen_optimizer.zero_grad()
 
-                # TODO : detach ?
-                if t % 2 == 0:
-                    Gx = gen_model(bw_img).detach()  # Generates fake colored images
+                if t % 2 == 1:
+                    Gx = gen_model(bw_img)  # Generates fake colored images
                 else:
-                    Gx = gen_model(bw_img)
+                    Gx = gen_model(bw_img).detach()  # Detach the generated images for training the discriminator only
+
                 Dx = dis_model(clr_img, bw_img)  # Produces probabilities for real images
                 Dg = dis_model(Gx, bw_img)  # Produces probabilities for generator images
 
@@ -154,102 +157,41 @@ class cGAN(object):
                 print(
                     'Train - Discriminator Loss: {:.4f} Generator Loss: {:.4f}'.format(epoch_dis_loss, epoch_gen_loss))
 
+
             # Save the model on the disk for the future
             if (epoch_num + 1) % self.config.save_frequency == 0 and epoch_num != 0:
                 if not os.path.exists(self.config.model_dir):
                     os.makedirs(self.config.model_dir)
-                torch.save(gen_model, self.config.model_dir + 'gen_model_%i.pk' % epoch_num)
-                torch.save(dis_model, self.config.model_dir + 'dis_model_%i.pk' % epoch_num)
+                torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
+                torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_%{epoch_num}.pk'))
                 print("Saved Model")
 
-            '''
-            def test(self):
-                self.test_model = torch.load(self.config.model_dir + 'model_weights_epoch_9.pk')
-                self.test_generator = self.test_model['gen_model_state_dict']
-                self.test_discriminator = self.test_model['dis_model_state_dict']
-                return self.testing(self.test_generator, self.test_discriminator, self.testing_data_loader,  self.loss, L1_loss=None, lambda_L1=1)
+        self.is_trained = True
 
-            def testing(self, dis_model, gen_model, data_loader, loss_fn, L1_loss=None, lambda_L1=1):
-                dis_model.train(False)
-                gen_model.train(False)
-
-                dis_running_loss = 0.0
-                gen_running_loss = 0.0
-                size = 0
-
-                for data in data_loader:
-
-                    clr_img, bw_img = data['clr'], data['bw']
-
-                    if use_gpu:
-                        clr_img = clr_img.cuda()
-                        bw_img  = bw_img.cuda()
-
-                    batch_size = clr_img.size(0)
-                    size += batch_size
-
-                    fake_img = gen_model(bw_img).detach()
-                    fake_out = dis_model(fake_img)
-
-                    loss = loss_fn(fake_out, torch.ones(batch_size, 1).cuda())
-
-                    if L1_loss is not None :
-                        loss = loss + lambda_L1 * L1_loss()
-
-                    gen_running_loss += loss_fn(fake_out, torch.ones(batch_size, 1).cuda())
-                    dis_running_loss += loss_fn(fake_out, torch.zeros(batch_size, 1).cuda())
-
-                    print('Test - Discriminator Loss: {:.4f} Generator Loss: {:.4f}'.format(dis_running_loss / size,
-                                                                                            gen_running_loss / size))
-
-                    for data in data_loader:
-
-                        clr_img, bw_img = data['clr'], data['bw']
-
-                        if use_gpu == True:
-                            clr_img = clr_img.cuda()
-                            bw_img  = bw_img.cuda()
-
-                        batch_size = clr_img.size(0)
-                        size += batch_size
-
-                        out = dis_model(clr_img)
-
-                        loss = loss_fn(out, torch.ones(batch_size, 1).cuda()) 
-                        dis_running_loss += loss.data.cpu().numpy()
-
-                        fake_img = gen_model(bw_img).detach()
-                        fake_out = dis_model(fake_img)
-                        loss = loss_fn(fake_out, torch.zeros(batch_size, 1).cuda())
-                        dis_running_loss += loss.data.cpu().numpy()
-
-
-                        fake_img = gen_model(bw_img).detach()
-                        fake_out = dis_model(fake_img)
-                        loss = loss_fn(fake_out, torch.ones(batch_size, 1).cuda())
-                        gen_running_loss += loss.data.cpu().numpy()
-
-                        if L1_loss is not None :
-                            loss = loss + lambda_L1 * L1_loss()
-            '''
+    # ------------------------------
 
     def predict(self):
-        '''
-        Generate colored images from an initial b&w image
-        '''
-        # Load a model with which to make the prediction
-        self.predict_generator = torch.load(self.config.model_dir + 'gen_model_%s.pk' % str(self.config.n_epochs - 1))
-        self.predict_generator.eval()
+        if not self.is_trained:
+            # Load a model with which to make the prediction
+            self.predict_generator = torch.load(
+                os.path.join(self.config.model_dir, 'gen_model_%s.pk' % str(self.config.n_epochs - 1))
+            )
+        else:
+            self.predict_generator = self.gen_model
 
+        self.predict_generator.eval()
         return self.predicting(self.predict_generator, self.prediction_data_loader)
+
 
     def predicting(self, gen_model, data_loader):
 
-        use_gpu = torch.cuda.is_available()
+        use_gpu = self.config.gpu
         if use_gpu:
             torch.cuda.set_device(0)
 
-        # gen_model.train(False)
+        gen_model.eval()
+
+        imgs = []
 
         for data in data_loader:
             bw_img = data['bw']
@@ -263,8 +205,8 @@ class cGAN(object):
             # print(fake_img.cpu().numpy().shape)
 
             for i in range(len(fake_img)):
-                img = fake_img.cpu().numpy()[i].transpose(1, 2, 0)
-                img = (((img / 2.0 + 0.5) * 256).astype('uint8'))
+                img_array = fake_img.cpu().numpy()[i].transpose(1, 2, 0)
+                img_array = (((img_array / 2.0 + 0.5) * 256).astype('uint8'))
                 '''
                 red = img[:, :, 2].copy()
                 blue = img[:, :, 1].copy()
@@ -273,5 +215,8 @@ class cGAN(object):
                 img[:, :, 1] = blue
                 img[:, :, 2] = green
                 '''
-                cv2.imwrite(self.config.predicted_dir + '%i.jpg' % i, img)
-    """
+                img = Image.fromarray(img_array)
+                imgs.append(img)
+
+
+        return imgs

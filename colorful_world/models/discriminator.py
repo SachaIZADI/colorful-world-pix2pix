@@ -4,7 +4,7 @@ import torch.nn as nn
 
 class Discriminator(nn.Module):
 
-    def __init__(self, image_size):
+    def __init__(self, image_size: int):
         super(Discriminator, self).__init__()
 
         self.image_size = image_size
@@ -41,12 +41,12 @@ class Discriminator(nn.Module):
             nn.Linear(in_features=16, out_features=1),
         )
 
+    def forward(self, clr: torch.Tensor, bw: torch.Tensor):
 
-    def forward(self, clr, bw):
         cat_clr_bw = torch.cat((clr, bw), 1)
-        print(cat_clr_bw.shape)
         features = self.conv(cat_clr_bw)
         flatten = features.view(-1, int(self.image_size / (2 ** 5)) * int(self.image_size / (2 ** 5) * 1))
         result = self.fc(flatten)
         output = torch.sigmoid(result)
+
         return output

@@ -7,7 +7,6 @@ class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
 
-
         # --------- Encoder ---------
         # *bs = batch size
         # input = bs x 256 x 256 x 1  / output = bs x 128 x 128 x 64
@@ -111,7 +110,7 @@ class Generator(nn.Module):
             nn.ConvTranspose2d(in_channels=2 * 64, out_channels=3, kernel_size=4, padding=1, stride=2),
             nn.Tanh())
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor):
         # --------- Encoder ---------
         e1 = self.encod1(x)
         e2 = self.encod2(e1)

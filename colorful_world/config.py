@@ -1,21 +1,23 @@
+import torch
+
 class Config(object):
 
     def __init__(
             self,
-            lr_dis=0.0001,
-            lr_gen=0.001,
-            n_epochs=10,
-            batch_size=14,
-            use_L1_loss=True,
+            lr_dis=0.01,
+            lr_gen=0.1,
+            n_epochs=15,
+            batch_size=4,
+            use_L1_loss=False,
             lambda_L1 = 10,
             image_size=256,
             train_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw_small',
-            model_dir='...',
+            model_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/models/models_saved',
             test_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw_small',
             prediction_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw_small',
             predicted_dir='...',
             save_frequency=10,
-            gpu=False,
+            gpu=torch.cuda.is_available(),
             lfw_root_dir="/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw",
     ):
 

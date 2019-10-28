@@ -31,6 +31,9 @@ class DatasetColorBW(Dataset):
 
         sample = {'clr': clr, 'bw': bw}
 
+        if not self.colored: sample.pop("clr")
+        if not self.bw: sample.pop("bw")
+
         return sample
 
     def generate_data(self, file: str, img_size: int, colored: bool, bw: bool):
