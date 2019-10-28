@@ -1,4 +1,4 @@
-Hello world
+# Colorful world - pix2pix implementation
 
 ## Data:
 We trained our Colorizer model with face picture from the open-source dataset [*Labeled Faces in the Wild*](http://vis-www.cs.umass.edu/lfw/) (LFW). 
@@ -36,9 +36,11 @@ helps the generator avoid coloring beyond the edges of the B&W image. A bit like
 <img src = "/media/color_edge.jpg" height="100">
 
 It is a variation of the classical autoencoder:
+
 <img src = "/media/Unet.png" height="100">
 
 The `pytorch` computational graph of the model is: 
+
 <img src = "/media/generator.png" height="200">
 
 The discriminator is a classical Convet classifier that takes both a B&W and a colored image as input:
