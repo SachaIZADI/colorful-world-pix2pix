@@ -59,55 +59,55 @@ class Generator(nn.Module):
         # input = bs x 1 x 1 x 512 / output = bs x 2 x 2 x 512
         self.decod8 = nn.Sequential(
             nn.ConvTranspose2d(in_channels=512, out_channels=512, kernel_size=4, padding=1, stride=2),
-            nn.ReLU(),
+            nn.ELU(),
             # nn.Dropout2d(0.2),
             nn.BatchNorm2d(512),
         )
         # input = bs x 2 x 2 x 2*512 / output = bs x 4 x 4 x 512
         self.decod7 = nn.Sequential(
             nn.ConvTranspose2d(in_channels=2 * 512, out_channels=512, kernel_size=4, padding=1, stride=2),
-            nn.ReLU(),
+            nn.ELU(),
             # nn.Dropout2d(0.2),
             nn.BatchNorm2d(512),
         )
         # input = bs x 4 x 4 x 2*512 / output = bs x 8 x 8 x 512
         self.decod6 = nn.Sequential(
             nn.ConvTranspose2d(in_channels=2 * 512, out_channels=512, kernel_size=4, padding=1, stride=2),
-            nn.ReLU(),
+            nn.ELU(),
             # nn.Dropout2d(0.2),
             nn.BatchNorm2d(512),
         )
         # input = bs x 8 x 8 x 2*512 / output = bs x 16 x 16 x 512
         self.decod5 = nn.Sequential(
             nn.ConvTranspose2d(in_channels=2 * 512, out_channels=512, kernel_size=4, padding=1, stride=2),
-            nn.ReLU(),
+            nn.ELU(),
             # nn.Dropout2d(0.2),
             nn.BatchNorm2d(512),
         )
         # input = bs x 16 x 16 x 2*512 / output = bs x 32 x 32 x 256
         self.decod4 = nn.Sequential(
             nn.ConvTranspose2d(in_channels=2 * 512, out_channels=256, kernel_size=4, padding=1, stride=2),
-            nn.ReLU(),
+            nn.ELU(),
             # nn.Dropout2d(0.2),
             nn.BatchNorm2d(256),
         )
         # input = bs x 32 x 32 x 2*256 / output = bs x 64 x 64 x 128
         self.decod3 = nn.Sequential(
             nn.ConvTranspose2d(in_channels=2 * 256, out_channels=128, kernel_size=4, padding=1, stride=2),
-            nn.ReLU(),
+            nn.ELU(),
             # nn.Dropout2d(0.2),
             nn.BatchNorm2d(128),
         )
         # input = bs x 32 x 32 x 2*128 / output = bs x 128 x 128 x 64
         self.decod2 = nn.Sequential(
             nn.ConvTranspose2d(in_channels=2 * 128, out_channels=64, kernel_size=4, padding=1, stride=2),
-            nn.ReLU(),
+            nn.ELU(),
             # nn.Dropout2d(0.2),
             nn.BatchNorm2d(64),
         )
         # input = bs x 128 x 128 x 2*64 / output = bs x 256 x 256 x 3
         self.decodout = nn.Sequential(
-            nn.ConvTranspose2d(in_channels=2 * 64, out_channels=3, kernel_size=4, padding=1, stride=2),
+            nn.ConvTranspose2d(in_channels=2 * 64, out_channels=3, kernel_size=1, padding=0, output_padding=1, stride=2),
             nn.Tanh())
 
     def forward(self, x: torch.Tensor):

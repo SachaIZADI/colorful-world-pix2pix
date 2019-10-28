@@ -4,12 +4,12 @@ class Config(object):
 
     def __init__(
             self,
-            lr_dis=0.01,
-            lr_gen=0.1,
-            n_epochs=15,
+            lr_dis=0.001,
+            lr_gen=0.01,
+            n_epochs=10,
             batch_size=4,
-            use_L1_loss=False,
-            lambda_L1 = 10,
+            use_L1_loss=True,
+            lambda_L1=1,
             image_size=256,
             train_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw_small',
             model_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/models/models_saved',

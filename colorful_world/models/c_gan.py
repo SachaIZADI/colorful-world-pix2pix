@@ -120,8 +120,13 @@ class cGAN(object):
                 gen_optimizer.zero_grad()
 
                 if t % 2 == 1:
+                    dis_model.train(False)
+                    gen_model.train(True)
                     Gx = gen_model(bw_img)  # Generates fake colored images
+
                 else:
+                    dis_model.train(True)
+                    gen_model.train(False)
                     Gx = gen_model(bw_img).detach()  # Detach the generated images for training the discriminator only
 
                 Dx = dis_model(clr_img, bw_img)  # Produces probabilities for real images
@@ -129,7 +134,7 @@ class cGAN(object):
 
                 d_loss = -torch.mean(
                     torch.log(Dx + EPS) + torch.log(1. - Dg + EPS))  # Loss function of the discriminator.
-                g_loss = -torch.mean(torch.log(Dg + EPS))  # Loss function of the generator.
+                g_loss = - torch.mean(torch.log(Dg + EPS))  # Loss function of the generator.
 
                 if L1_loss:
                     g_loss = g_loss + lambda_L1 * L1_loss(Gx, clr_img)
@@ -159,12 +164,18 @@ class cGAN(object):
 
 
             # Save the model on the disk for the future
+            """
             if (epoch_num + 1) % self.config.save_frequency == 0 and epoch_num != 0:
                 if not os.path.exists(self.config.model_dir):
                     os.makedirs(self.config.model_dir)
                 torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
-                torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_%{epoch_num}.pk'))
+                torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
                 print("Saved Model")
+            """
+        torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
+        torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
+        print("Saved Model")
+
 
         self.is_trained = True
 
@@ -195,14 +206,11 @@ class cGAN(object):
 
         for data in data_loader:
             bw_img = data['bw']
-            batch_size = bw_img.size(0)
 
             if use_gpu:
                 bw_img = bw_img.cuda()
 
             fake_img = gen_model(bw_img).detach()
-
-            # print(fake_img.cpu().numpy().shape)
 
             for i in range(len(fake_img)):
                 img_array = fake_img.cpu().numpy()[i].transpose(1, 2, 0)

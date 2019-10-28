@@ -28,10 +28,22 @@ title={Image-to-Image Translation with Conditional Adversarial Networks},
 
 # TODO:
 
+- Model doesn't work, check why:
+    - loss function not the good one
+    - no alternate training
+    - model is bad
+    - conv transpose is ill parametered
+    - pb with filters and tensor shape
+    - pb with the data loader ? 
+    - pb when concat ?
+    - padding="SAME"
+    - pq ça reste noir ??
+
 - Read/find pix2pix paper
 - Compare with existing implementations
     - https://github.com/SachaIZADI/Colorful-World/blob/master/TensorFlow_implementation/model.py
     - https://github.com/znxlwm/pytorch-pix2pix/blob/master/network.py
+    
 
 
 - Work with collab

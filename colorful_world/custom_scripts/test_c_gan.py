@@ -6,14 +6,14 @@ def main():
     config = Config()
     cgan = cGAN(config=config)
     train = True
+    predict = True
 
     if train:
         print("---- Started to train")
         cgan.train()
-    else:
+    if predict:
         imgs = cgan.predict()
-
-    imgs[0].show()
+        imgs[0].show()
 
 
 if __name__ == "__main__":
