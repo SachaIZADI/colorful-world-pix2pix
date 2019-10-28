@@ -28,10 +28,6 @@ title={Image-to-Image Translation with Conditional Adversarial Networks},
 # Objective function
 
 # TODO:
-- Core project:
-    - plot model architecture
-    - create a function to save & plot the loss
-    - create a function to save the evolution of the colorization of an image
     
 - Work with collab
     - create a script to clone the project

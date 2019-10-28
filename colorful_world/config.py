@@ -4,10 +4,10 @@ class Config(object):
 
     def __init__(
             self,
-            lr_dis=0.001,
-            lr_gen=0.01,
+            lr_dis=0.0001,
+            lr_gen=0.001,
             n_epochs=10,
-            batch_size=4,
+            batch_size=8,
             use_L1_loss=True,
             lambda_L1=1,
             image_size=512,
@@ -19,6 +19,11 @@ class Config(object):
             save_frequency=10,
             gpu=torch.cuda.is_available(),
             lfw_root_dir="/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw",
+            plot_loss=True,
+            show_color_evolution=True,
+            picture_color_evolution="/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw/Pierce_Brosnan_0002.jpg",
+            result_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/results/'
+
     ):
 
         self.lr_dis = lr_dis
@@ -41,3 +46,8 @@ class Config(object):
         self.gpu = gpu
 
         self.lfw_root_dir = lfw_root_dir
+
+        self.plot_loss = plot_loss
+        self.show_color_evolution = show_color_evolution
+        self.picture_color_evolution = picture_color_evolution
+        self.result_dir = result_dir

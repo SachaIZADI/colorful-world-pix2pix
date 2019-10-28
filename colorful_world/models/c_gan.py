@@ -10,6 +10,7 @@ from torch import optim
 import numpy as np
 import os
 from PIL import Image
+import matplotlib.pyplot as plt
 
 
 
@@ -96,6 +97,16 @@ class cGAN(object):
         dis_loss = np.zeros(n_epochs)
         gen_loss = np.zeros(n_epochs)
 
+        if self.config.show_color_evolution:
+            dataset_color_bw = DatasetColorBW(self.config.train_dir)
+            _, bw_example = dataset_color_bw.generate_data(
+                file=self.config.picture_color_evolution,
+                img_size=self.config.image_size,
+                colored=True,
+                bw=True,
+            )
+            bw_example = bw_example.unsqueeze(0)
+
         t = 0
 
         for epoch_num in range(n_epochs):
@@ -162,8 +173,16 @@ class cGAN(object):
                 print(
                     'Train - Discriminator Loss: {:.4f} Generator Loss: {:.4f}'.format(epoch_dis_loss, epoch_gen_loss))
 
+            if self.config.show_color_evolution and t%2 == 1:
+                Gx_example = gen_model(bw_example).detach()
+                Gx_example_img = Image.fromarray(
+                    np.uint8((Gx_example[0].permute(1, 2, 0).numpy() / 2 + 0.5) * 256)
+                )
+                Gx_example_img.save(
+                    fp=os.path.join(self.config.result_dir, "color_evolution", f"Gx_epoch_{epoch_num}.png"),
+                    format="png"
+                )
 
-            # Save the model on the disk for the future
             """
             if (epoch_num + 1) % self.config.save_frequency == 0 and epoch_num != 0:
                 if not os.path.exists(self.config.model_dir):
@@ -175,6 +194,16 @@ class cGAN(object):
         torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
         torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
         print("Saved Model")
+
+        if self.config.plot_loss:
+            fig = plt.figure()
+            plt.plot(list(range(n_epochs)), dis_loss, label="discriminator")
+            plt.plot(list(range(n_epochs)), gen_loss, label="generator")
+            plt.title("Evolution of the Discriminator and Generator loss during the training")
+            plt.grid()
+            plt.legend(loc='upper right')
+            plt.show()
+            fig.savefig(os.path.join(self.config.result_dir, "loss_graph.png"), format="png")
 
 
         self.is_trained = True
