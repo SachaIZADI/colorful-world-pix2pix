@@ -33,10 +33,10 @@ class DatasetColorBW(Dataset):
 
         return sample
 
-    def generate_data(self, file: str, img_size: [int, int], colored: bool, bw: bool):
+    def generate_data(self, file: str, img_size: int, colored: bool, bw: bool):
 
         img_clr = Image.open(file)
-        img_clr = img_clr.resize(img_size)
+        img_clr = img_clr.resize((img_size, img_size))
 
         if colored:
             img_clr_array = np.array(img_clr)

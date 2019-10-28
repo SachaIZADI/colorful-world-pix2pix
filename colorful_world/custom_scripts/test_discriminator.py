@@ -6,7 +6,7 @@ from colorful_world.config import Config
 def main():
 
     config = Config()
-    discriminator = Discriminator(image_size=config.image_size[0])
+    discriminator = Discriminator(image_size=config.image_size)
 
     dataset_bw_clr = DatasetColorBW(
         root_dir=config.lfw_root_dir
