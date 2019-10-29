@@ -100,8 +100,7 @@ We also tried our model on an example that was not in the training set, as expec
 # TODO:
 
 - Functionalities:
-    - Gif Generator --> fetch the results in the good order + sample 1 every x
-    - Gif Generator --> same but for an image from the training set
+    - Gif Generator @Training level --> same but for an image from the training set
     - Gif Generator / Loss plotter --> save state every batch ? Instead of every epoch ?
     - Model prediction --> TBC ?
 

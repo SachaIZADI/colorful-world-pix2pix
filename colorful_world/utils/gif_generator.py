@@ -1,5 +1,6 @@
 from PIL import Image
 import os
+import math
 
 
 def generate_gif(
@@ -7,6 +8,7 @@ def generate_gif(
         gif_filename: str = "colorization_training.gif",
         milliseconds_per_frame: int = 20,
         sort_frames_per_epoch: bool = True,
+        max_nb_frames: int = None,
 ):
 
     img_files = os.listdir(img_dir)
@@ -16,6 +18,10 @@ def generate_gif(
         img_files = sorted(img_files, key=lambda x: int(x.replace(".png", "").split("_")[-1]))
 
     frames = [Image.open(os.path.join(img_dir, img_file)) for img_file in img_files]
+
+    if max_nb_frames is not None:
+        saving_step = math.floor(len(frames) / max_nb_frames)
+        frames = frames[::saving_step]
 
     frames[0].save(
         os.path.join(img_dir, gif_filename),
