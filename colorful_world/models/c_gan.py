@@ -106,6 +106,8 @@ class cGAN(object):
                 bw=True,
             )
             bw_example = bw_example.unsqueeze(0)
+            if use_gpu:
+                bw_example = bw_example.cuda()
 
         t = 0
 
@@ -197,6 +199,8 @@ class cGAN(object):
 
 
         self.is_trained = True
+
+        return cGAN
 
     # ------------------------------
 

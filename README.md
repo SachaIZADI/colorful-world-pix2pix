@@ -33,11 +33,11 @@ It predicts, **conditionally** to the B&W image if the colorized input is the gr
 The generator has a UNet architecture. This architecture is often used for image segmentation, and one could justify that this architecture
 helps the generator avoid coloring beyond the edges of the B&W image. A bit like a child.
 
-<img src = "/media/color_edge.jpg" height="100">
+<img src = "/media/color_edge.jpg" height="150">
 
 It is a variation of the classical autoencoder:
 
-<img src = "/media/Unet.png" height="100">
+<img src = "/media/Unet.png" height="150">
 
 The `pytorch` computational graph of the model is: 
 
@@ -61,6 +61,9 @@ That being said, contrary to the pix2pix paper, we did not implement any source 
 
 
 # TODO:
+
+https://medium.com/@ashwindesilva/how-to-use-google-colaboratory-to-clone-a-github-repository-e07cf8d3d22b
+https://stackoverflow.com/questions/48350226/methods-for-using-git-with-google-colab
     
 - Work with collab
     - create a script to clone the project
