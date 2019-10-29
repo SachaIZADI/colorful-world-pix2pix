@@ -1,5 +1,7 @@
 # Colorful world - pix2pix implementation
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SachaIZADI/colorful-world-pix2pix/pix2pix.ipynb]
+
 ## Data:
 We trained our Colorizer model with face picture from the open-source dataset [*Labeled Faces in the Wild*](http://vis-www.cs.umass.edu/lfw/) (LFW). 
 It contains more than 13,000 images of faces collected from the web.
@@ -55,10 +57,36 @@ That being said, contrary to the pix2pix paper, we did not implement any source 
 
 ## Results
 
+### Overfitting on a small sample from the dataset
+
+We started by checking that the model could overfit on a small sample (~20 pictures) from the initial dataset. For a batch size of 8, 1000 epochs, 
+and learning rates `lr_dis = 1e-6` and `lr_gen = 1e-7` we obtained the following results (left: generated image | right: ground truth) :
+
+<img src = "/media/first_results/img_1_generated.png" height="100"><img src = "/media/first_results/img_1_original.png" height="100">
+
+<img src = "/media/first_results/img_2_generated.png" height="100"><img src = "/media/first_results/img_2_original.png" height="100">
+
+Besides some artifacts and patches that do not seem to be colored (which are all located on the left part of the faces), we obtained satisfying results
+that convinced us that the model had indeed the ability to learn a mapping from B&W images to colored ones.
+
+We also observed a typical GAN loss graph with an explicit trade-off between the Generator and the Discriminator during the training.
+
+<img src = "/media/first_results/loss_graph.png" height="200">
+
+We also tried our model on an example that was not in the training set, as expected the results are less convincing due to the model's overfitting:
+
+<img src = "/media/first_results/test_img_generated.png" height="100"><img src = "/media/first_results/test_img_original.png" height="100">
+
+
+### Training on a bigger dataset
+
+
 <img src = "/colorful_world/results/loss_graph.png" height="200">
 
 <img src = "/colorful_world/results/color_evolution/colorization_training.gif" height="200">
 
+
+## Reproduce the project
 
 # TODO:
 

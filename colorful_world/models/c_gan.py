@@ -181,7 +181,6 @@ class cGAN(object):
                     fp=os.path.join(self.config.result_dir, "color_evolution", f"Gx_epoch_{epoch_num}.png"),
                     format="png"
                 )
-                print("saved image")
 
             if (epoch_num % 10 == 0 and epoch_num != 0) or epoch_num == n_epochs-1:
                 torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
