@@ -46,13 +46,9 @@ It predicts, **conditionally** to the B&W image if the colorized input is the gr
 
 
 The generator has a UNet architecture. This architecture is often used for image segmentation, and one could justify that this architecture
-helps the generator avoid coloring beyond the edges of the B&W image. A bit like a child.
+helps the generator avoid coloring beyond the edges of the B&W image. A bit like a child. It is a variation of the classical autoencoder.
 
-<img src = "/media/color_edge.jpg" height="150">
-
-It is a variation of the classical autoencoder:
-
-<img src = "/media/Unet.png" height="150">
+<img src = "/media/color_edge.jpg" height="150"> <img src = "/media/Unet.png" height="150">
 
 The `pytorch` computational graph of the model is: 
 
