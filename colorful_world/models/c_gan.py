@@ -175,7 +175,7 @@ class cGAN(object):
             if self.config.show_color_evolution and t % 2 == 1:
                 Gx_example = gen_model(bw_example).detach()
                 Gx_example_img = Image.fromarray(
-                    np.uint8((Gx_example[0].permute(1, 2, 0).numpy() / 2 + 0.5) * 256)
+                    np.uint8((Gx_example[0].permute(1, 2, 0).cpu().numpy() / 2 + 0.5) * 256)
                 )
                 Gx_example_img.save(
                     fp=os.path.join(self.config.result_dir, "color_evolution", f"Gx_epoch_{epoch_num}.png"),
