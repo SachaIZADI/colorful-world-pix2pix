@@ -97,6 +97,40 @@ We also tried our model on an example that was not in the training set, as expec
 
 ## Reproduce the project
 
+1/ Clone the repo and install the dependencies
+```
+git clone https://github.com/SachaIZADI/colorful-world-pix2pix.git
+cd colorful-world-pix2pix
+pip install -r requirements.txt
+```
+
+2/ Download the data
+```
+cd colorful_world/data/download_data.sh
+cd ..
+cd ..
+```
+
+3/ Train a model
+
+We strongly advise you to use a GPU to train the model from scratch. Hopefully, Google Colab has your back if you want 
+to have access to a free GPU. You just need to follow the steps mentioned in the Colab notebok: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SachaIZADI/colorful-world-pix2pix/blob/master/pix2pix.ipynb)
+
+We eventually trained our final model with these settings:
+
+```python
+config = Config(
+    a=1,
+    b=2,
+    c=3,
+)
+``` 
+
+4/ APIze and deploy the model
+
+TBC ...
+
+
 # TODO:
 
 - Functionalities:
