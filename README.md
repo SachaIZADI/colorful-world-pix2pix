@@ -2,6 +2,19 @@
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SachaIZADI/colorful-world-pix2pix/blob/master/pix2pix.ipynb)
 
+## The project
+
+The objective of this project is to translate gray-scale pictures into their colorized version. The problem consists in learning
+a mapping between the space of grayscale images (`NxNx1` tensors) to the space of RGB images (`NxNx3` tensors).
+
+<img src = "/media/first_results/problem_statement.png" height="250">
+
+To do so, we trained a generative model with thousands of pairs of `(grayscale_image, colored_image)`.
+
+This was initially a [school project](https://github.com/SachaIZADI/Colorful-World) from my 2018 DeepLearning class by [Marc Lelarge](https://www.di.ens.fr/~lelarge/).
+At that time we struggled to implement the model in `pytorch` and we went for `tensorflow` instead. With a bit more experience, I gave this project a fresh start again. 
+
+
 ## Data:
 We trained our Colorizer model with face picture from the open-source dataset [*Labeled Faces in the Wild*](http://vis-www.cs.umass.edu/lfw/) (LFW). 
 It contains more than 13,000 images of faces collected from the web.
@@ -90,15 +103,16 @@ We also tried our model on an example that was not in the training set, as expec
 
 # TODO:
 
-https://medium.com/@ashwindesilva/how-to-use-google-colaboratory-to-clone-a-github-repository-e07cf8d3d22b
-https://stackoverflow.com/questions/48350226/methods-for-using-git-with-google-colab
-    
-- Work with collab
-    - create a script to clone the project
-    - create a script to launch the training
+- Functionalities:
+    - Gif Generator --> fetch the results in the good order + sample 1 every x
+    - Gif Generator --> same but for an image from the training set
+    - Gif Generator / Loss plotter --> save state every batch ? Instead of every epoch ?
+    - Model prediction --> TBC ?
 
-- Pay a AWS server to train / and predict
+- Model:
+    - Test the algo with early stopping ?
+    - Train on the full dataset
 
-
-
-- Make a Flask API & deploy in serverless
+- IT:
+    - Make a simple Flask API (predict and that's all)
+    - deploy on Heroku if not too slow / or test another ML service
