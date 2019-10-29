@@ -63,6 +63,7 @@ As in the traditional GAN setting, the generator and the discriminator play a Mi
 <img src = "/media/loss_fn.png" height="20">
 
 That being said, contrary to the pix2pix paper, we did not implement any source of randomness in the generation of the colorized images.
+(`z` is fully deterministic in our implementation).
 
 ## Results
 
