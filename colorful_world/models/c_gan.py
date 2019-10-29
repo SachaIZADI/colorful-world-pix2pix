@@ -172,7 +172,7 @@ class cGAN(object):
 
             print('Train - Discriminator Loss: {:.4f} Generator Loss: {:.4f}'.format(epoch_dis_loss, epoch_gen_loss))
 
-            if self.config.show_color_evolution and t % 2 == 1:
+            if self.config.show_color_evolution:
                 Gx_example = gen_model(bw_example).detach()
                 Gx_example_img = Image.fromarray(
                     np.uint8((Gx_example[0].permute(1, 2, 0).cpu().numpy() / 2 + 0.5) * 256)
