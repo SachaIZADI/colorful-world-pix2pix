@@ -7,7 +7,7 @@
 The objective of this project is to translate gray-scale pictures into their colorized version. The problem consists in learning
 a mapping between the space of grayscale images (`NxNx1` tensors) to the space of RGB images (`NxNx3` tensors).
 
-<img src = "/media/first_results/problem_statement.png" height="250">
+<img src = "/media/problem_statement.png" height="250">
 
 To do so, we trained a generative model with thousands of pairs of `(grayscale_image, colored_image)`.
 
@@ -116,3 +116,8 @@ We also tried our model on an example that was not in the training set, as expec
 - IT:
     - Make a simple Flask API (predict and that's all)
     - deploy on Heroku if not too slow / or test another ML service
+
+
+## Resources:
+- https://medium.com/@utk.is.here/keep-calm-and-train-a-gan-pitfalls-and-tips-on-training-generative-adversarial-networks-edd529764aa9
+- https://github.com/soumith/ganhacks
