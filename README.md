@@ -11,7 +11,7 @@ a mapping between the space of grayscale images (`NxNx1` tensors) to the space o
 
 To do so, we trained a generative model with thousands of pairs of `(grayscale_image, colored_image)`.
 
-This was initially a [school project](https://github.com/SachaIZADI/Colorful-World) from my 2018 DeepLearning class by [Marc Lelarge](https://www.di.ens.fr/~lelarge/).
+This was initially a [school project](https://github.com/SachaIZADI/Colorful-World) from my 2018 DeepLearning class by [Marc Lelarge](https://mlelarge.github.io/dataflowr-web/).
 At that time we struggled to implement the model in `pytorch` and we went for `tensorflow` instead. With a bit more experience, I gave this project a fresh start again. 
 
 
@@ -75,8 +75,7 @@ That being said, contrary to the pix2pix paper, we did not implement any source 
 We started by checking that the model could overfit on a small sample (~20 pictures) from the initial dataset. For a batch size of 8, 1000 epochs, 
 and learning rates `lr_dis = 1e-6` and `lr_gen = 1e-7` we obtained the following results (left: generated image | right: ground truth) :
 
-<img src = "/media/first_results/img_1_generated.png" height="100"><img src = "/media/first_results/img_1_original.jpg" height="100">
-
+<img src = "/media/first_results/img_1_generated.png" height="100"><img src = "/media/first_results/img_1_original.jpg" height="100"> 
 <img src = "/media/first_results/img_2_generated.png" height="100"><img src = "/media/first_results/img_2_original.jpg" height="100">
 
 Besides some artifacts and patches that do not seem to be colored (which are all located on the left part of the faces), we obtained satisfying results
