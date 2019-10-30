@@ -204,11 +204,15 @@ class cGAN(object):
 
     # ------------------------------
 
-    def predict(self):
+    def predict(self, path_to_model: str = None):
         if not self.is_trained:
             # Load a model with which to make the prediction
             self.predict_generator = torch.load(
                 os.path.join(self.config.model_dir, 'gen_model_%s.pk' % str(self.config.n_epochs - 1))
+            )
+        elif path_to_model is not None:
+            self.predict_generator = torch.load(
+                os.path.join(path_to_model)
             )
         else:
             self.predict_generator = self.gen_model
@@ -216,9 +220,7 @@ class cGAN(object):
         self.predict_generator.eval()
         return self.predicting(self.predict_generator, self.prediction_data_loader)
 
-
     def predicting(self, gen_model, data_loader):
-
         use_gpu = self.config.gpu
         if use_gpu:
             torch.cuda.set_device(0)

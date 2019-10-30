@@ -2,3 +2,5 @@
 **/models_saved
 **/color_evolution/*.png
 **/.ipynb_checkpoints/**
+**/to_predict/*.png
+**/to_predict/*.jpg
