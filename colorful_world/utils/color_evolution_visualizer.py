@@ -19,6 +19,12 @@ def visualize_color_evolution_training(
 
     c_gan = cGAN(config=config)
 
+    for i in range(len(c_gan.prediction_dataset)):
+        try:
+            os.mkdir(path=os.path.join(config.result_dir, "color_evolution", str(i)))
+        except:
+            raise Warning("Could not mkdir...")
+
     for model in models_saved:
 
         colored_imgs = c_gan.predict(path_to_model=os.path.join(model_dir, model))

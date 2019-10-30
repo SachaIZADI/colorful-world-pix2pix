@@ -205,14 +205,14 @@ class cGAN(object):
     # ------------------------------
 
     def predict(self, path_to_model: str = None):
-        if not self.is_trained:
+        if path_to_model is not None:
+            self.predict_generator = torch.load(
+                os.path.join(path_to_model)
+            )
+        elif not self.is_trained:
             # Load a model with which to make the prediction
             self.predict_generator = torch.load(
                 os.path.join(self.config.model_dir, 'gen_model_%s.pk' % str(self.config.n_epochs - 1))
-            )
-        elif path_to_model is not None:
-            self.predict_generator = torch.load(
-                os.path.join(path_to_model)
             )
         else:
             self.predict_generator = self.gen_model
