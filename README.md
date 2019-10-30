@@ -133,9 +133,6 @@ TBC ...
 
 # TODO:
 
-- Functionalities:
-    - Gif Generator / Loss plotter --> save state every batch ? Instead of every epoch ?
-
 - Model:
     - Test the algo with early stopping ?
     - Train on the full dataset
