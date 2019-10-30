@@ -193,8 +193,10 @@ class cGAN(object):
                                 dis_model,
                                 os.path.join("/content/gdrive", "My Drive", "pix2pix", f"dis_model_step_{t}.pk")
                             )
-                            pickle.dump(gen_loss, "gen_loss_lst.pk")
-                            pickle.dump(dis_loss, "dis_loss_lst.pk")
+                            with open('gen_loss_lst.pk', 'w') as f:
+                                pickle.dump(gen_loss, f)
+                            with open('dis_loss_lst.pk', 'w') as f:
+                                pickle.dump(dis_loss, f)
 
                         print(f"Saved Model at step {t}")
 
