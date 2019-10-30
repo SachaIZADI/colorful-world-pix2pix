@@ -89,6 +89,7 @@ We also observed a typical GAN loss graph with an explicit trade-off between the
 As a sanity check, we tried early stopping the training process when the generator loss is at its lowest point. But it proved to be that this loss was artificially
 low due to the discriminator not being trained enough (we indeed gave the discriminator 1/10 the learning rate of the generator). See the results below (left: early stopping
 at ~100 epochs | right: training for 1000 epochs):
+
 <img src = "/media/first_results/img_1_early_stopping.png" height="100"> <img src = "/media/first_results/img_1_generated.png" height="100">
 
 
