@@ -193,7 +193,7 @@ class cGAN(object):
                 torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
                 print("Saved Model")
                 if train_on_colab:
-                    torch.save(gen_model, f'/content/gdrive/My Drive/pix2pix/gen_model_{epoch_num}.pk', 'w')
+                    torch.save(gen_model, f'/content/gdrive/My Drive/pix2pix/gen_model_{epoch_num}.pk')
 
         if self.config.plot_loss:
             fig = plt.figure()
