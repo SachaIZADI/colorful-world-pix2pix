@@ -24,7 +24,7 @@ def main():
     #generate_sample_lfw(size=lfw_small_size, src_folder=src_folder, dst_folder=dst_folder_small)
 
     dst_folder_medium = 'lfw_medium'
-    lfw_medium_size = 5000
+    lfw_medium_size = 1000
     generate_sample_lfw(size=lfw_medium_size, src_folder=src_folder, dst_folder=dst_folder_medium)
 
 

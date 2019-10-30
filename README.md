@@ -143,8 +143,9 @@ TBC ...
 # TODO:
 
 - Model:
-    - Test the algo with early stopping ?
     - Train on the full dataset
+    - "from google.colab import drive
+drive.mount('/content/gdrive')"
 
 - IT:
     - Make a simple Flask API (predict and that's all)
