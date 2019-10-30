@@ -1,9 +1,7 @@
-import torch
-from config import Config
-from model import GAN
-from torch import optim
-import torch.nn as nn
+from colorful_world.config import Config
+from colorful_world.models import cGAN
 
-config  = Config()
-model = GAN(config)
+
+config = Config()
+model = cGAN(config)
 model.predict()

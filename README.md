@@ -134,7 +134,6 @@ TBC ...
 # TODO:
 
 - Functionalities:
-    - Gif Generator @Training level --> same but for an image from the training set
     - Gif Generator / Loss plotter --> save state every batch ? Instead of every epoch ?
     - Model prediction --> TBC ?
 
