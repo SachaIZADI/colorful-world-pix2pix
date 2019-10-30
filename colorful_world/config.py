@@ -22,8 +22,8 @@ class Config(object):
             plot_loss=True,
             show_color_evolution=True,
             picture_color_evolution="/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw/Pierce_Brosnan_0002.jpg",
-            result_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/results/'
-
+            result_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/results/',
+            train_on_colab=False
     ):
 
         self.lr_dis = lr_dis
@@ -51,3 +51,5 @@ class Config(object):
         self.show_color_evolution = show_color_evolution
         self.picture_color_evolution = picture_color_evolution
         self.result_dir = result_dir
+
+        self.train_on_colab = train_on_colab

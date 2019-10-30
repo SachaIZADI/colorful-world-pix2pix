@@ -69,7 +69,8 @@ class cGAN(object):
             gen_optimizer=self.optimizer_gen,
             n_epochs=self.config.n_epochs,
             L1_loss=self.L1_loss,
-            lambda_L1=self.lambda_L1
+            lambda_L1=self.lambda_L1,
+            train_on_colab=self.config.train_on_colab
         )
 
     def training(
@@ -78,7 +79,8 @@ class cGAN(object):
             data_loader: DataLoader,
             dis_optimizer: torch.optim, gen_optimizer: torch.optim,
             n_epochs: int = 1,
-            L1_loss: nn.L1Loss = None, lambda_L1: float = 1.
+            L1_loss: nn.L1Loss = None, lambda_L1: float = 1.,
+            train_on_colab=False
     ):
 
         EPS = 1e-12
@@ -108,6 +110,10 @@ class cGAN(object):
             bw_example = bw_example.unsqueeze(0)
             if use_gpu:
                 bw_example = bw_example.cuda()
+
+        if train_on_colab:
+            from google.colab import drive
+            drive.mount('/content/gdrive')
 
         t = 0
 
@@ -186,6 +192,8 @@ class cGAN(object):
                 torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
                 torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
                 print("Saved Model")
+                if train_on_colab:
+                    torch.save(gen_model, f'/content/gdrive/My Drive/pix2pix/gen_model_{epoch_num}.pk', 'w')
 
         if self.config.plot_loss:
             fig = plt.figure()
