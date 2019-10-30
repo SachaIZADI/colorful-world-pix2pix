@@ -143,9 +143,8 @@ TBC ...
 # TODO:
 
 - Model:
-    - Train on the full dataset
-    - "from google.colab import drive
-drive.mount('/content/gdrive')"
+    - Checkpoints often
+    - Train on the full dataset & Get nice results
 
 - IT:
     - Make a simple Flask API (predict and that's all)

@@ -1,1 +1,2 @@
 from .gif_generator import generate_gif
+from .color_evolution_visualizer import visualize_color_evolution_training

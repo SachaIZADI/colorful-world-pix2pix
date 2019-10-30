@@ -11,6 +11,7 @@ import numpy as np
 import os
 from PIL import Image
 import matplotlib.pyplot as plt
+import pickle
 
 
 
@@ -96,8 +97,12 @@ class cGAN(object):
         dis_model.train(True)
         gen_model.train(True)
 
-        dis_loss = np.zeros(n_epochs)
-        gen_loss = np.zeros(n_epochs)
+        if self.config.save_every_epoch:
+            dis_loss = np.zeros(n_epochs)
+            gen_loss = np.zeros(n_epochs)
+        else:
+            dis_loss = []
+            gen_loss = []
 
         if self.config.show_color_evolution:
             dataset_color_bw = DatasetColorBW(self.config.train_dir)
@@ -171,10 +176,34 @@ class cGAN(object):
 
                 t += 1
 
+                if not self.config.save_every_epoch:
+
+                    gen_loss.append(g_loss.data.cpu().numpy())
+                    dis_loss.append(d_loss.data.cpu().numpy())
+
+                    if t % self.config.save_frequency == 0:
+                        torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_step_{t}.pk'))
+                        torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_step_{t}.pk'))
+                        if train_on_colab:
+                            torch.save(
+                                gen_model,
+                                os.path.join("/content/gdrive", "My Drive", "pix2pix", f"gen_model_step_{t}.pk")
+                            )
+                            torch.save(
+                                dis_model,
+                                os.path.join("/content/gdrive", "My Drive", "pix2pix", f"dis_model_step_{t}.pk")
+                            )
+                            pickle.dump(gen_loss, "gen_loss_lst.pk")
+                            pickle.dump(dis_loss, "dis_loss_lst.pk")
+
+                        print(f"Saved Model at step {t}")
+
             epoch_dis_loss = dis_running_loss / size
             epoch_gen_loss = gen_running_loss / size
-            dis_loss[epoch_num] = epoch_dis_loss
-            gen_loss[epoch_num] = epoch_gen_loss
+
+            if self.config.save_every_epoch:
+                dis_loss[epoch_num] = epoch_dis_loss
+                gen_loss[epoch_num] = epoch_gen_loss
 
             print('Train - Discriminator Loss: {:.4f} Generator Loss: {:.4f}'.format(epoch_dis_loss, epoch_gen_loss))
 
@@ -191,9 +220,10 @@ class cGAN(object):
             if epoch_num % self.config.save_frequency == 0 or epoch_num == n_epochs-1:
                 torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
                 torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
-                print("Saved Model")
                 if train_on_colab:
                     torch.save(gen_model, os.path.join("/content/gdrive","My Drive","pix2pix", f"gen_model_{epoch_num}.pk"))
+                    torch.save(dis_model,os.path.join("/content/gdrive", "My Drive", "pix2pix", f"dis_model_{epoch_num}.pk"))
+                print("Saved Model")
 
         if self.config.plot_loss:
             fig = plt.figure()
@@ -204,7 +234,6 @@ class cGAN(object):
             plt.legend(loc='upper right')
             plt.show()
             fig.savefig(os.path.join(self.config.result_dir, "loss_graph.png"), format="png")
-
 
         self.is_trained = True
 

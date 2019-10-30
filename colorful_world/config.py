@@ -23,7 +23,8 @@ class Config(object):
             show_color_evolution=True,
             picture_color_evolution="/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/data/lfw/Pierce_Brosnan_0002.jpg",
             result_dir='/Users/sachaizadi/Documents/Projets/colorful-world/colorful_world/results/',
-            train_on_colab=False
+            train_on_colab=False,
+            save_every_epoch=True
     ):
 
         self.lr_dis = lr_dis
@@ -53,3 +54,4 @@ class Config(object):
         self.result_dir = result_dir
 
         self.train_on_colab = train_on_colab
+        self.save_every_epoch = save_every_epoch  # if True saves after each epoch, if False saves after a batch step
