@@ -182,7 +182,8 @@ class cGAN(object):
                     format="png"
                 )
 
-            if (epoch_num % 10 == 0 and epoch_num != 0) or epoch_num == n_epochs-1:
+
+            if (epoch_num % self.config.save_frequency == 0 and epoch_num != 0) or epoch_num == n_epochs-1:
                 torch.save(gen_model, os.path.join(self.config.model_dir, f'gen_model_{epoch_num}.pk'))
                 torch.save(dis_model, os.path.join(self.config.model_dir, f'dis_model_{epoch_num}.pk'))
                 print("Saved Model")

@@ -135,7 +135,6 @@ TBC ...
 
 - Functionalities:
     - Gif Generator / Loss plotter --> save state every batch ? Instead of every epoch ?
-    - Model prediction --> TBC ?
 
 - Model:
     - Test the algo with early stopping ?
