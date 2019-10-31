@@ -4,14 +4,16 @@ import io
 import numpy as np
 import torch
 
-from colorful_world.config import Config
 
 app = Flask(__name__)
-config = Config()
+
+IMAGE_SIZE = 512
 
 # TODO: here
-PATH_TO_MODEL = "../colorful_world/models_saved/xxx.pkl"
-generator = torch.load(PATH_TO_MODEL)
+#PATH_TO_MODEL = "../colorful_world/models_saved/xxx.pkl"
+#generator = torch.load(PATH_TO_MODEL)
+
+generator = None
 
 
 @app.route('/', methods=['GET'])
@@ -33,6 +35,20 @@ def check_image():
         })
 
 
+@app.route('/test', methods=['POST'])
+def test():
+    if request.files.get("image"):
+
+        image = request.files["image"].read()
+        image = Image.open(io.BytesIO(image))
+        input_array = np.asarray(image)
+
+        return jsonify({
+            "image_shape": input_array.shape,
+            "is_grayscale_image": len(input_array.shape) == 2,
+        })
+
+
 @app.route('/colorize', methods=['POST'])
 def colorize():
     if request.files.get("image"):
@@ -41,7 +57,7 @@ def colorize():
         input_img = Image.open(io.BytesIO(input_img))
 
         input_img_shape = input_img.size
-        input_img = input_img.resize((config.image_size, config.image_size))
+        input_img = input_img.resize((IMAGE_SIZE, IMAGE_SIZE))
 
         input_img_array = np.asarray(input_img)
 

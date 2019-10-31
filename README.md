@@ -1,6 +1,7 @@
 # Colorful world - pix2pix implementation
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://google.com)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SachaIZADI/colorful-world-pix2pix/blob/master/pix2pix.ipynb)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)]()
 
@@ -103,6 +104,41 @@ We also tried our model on an example that was not in the training set, as expec
 <img src = "/colorful_world/results/loss_graph.png" height="200">
 
 <img src = "/colorful_world/results/color_evolution/colorization_training.gif" height="200">
+
+## Model deployment
+
+We developed a [Flask app](https://github.com/SachaIZADI/colorful-world-pix2pix/tree/master/api) to deploy the generator model.
+It offers: 
+- a very basic front-end to have a simple UI to play with the model
+- one API endpoint to POST a grayscale image and get its colorized version
+- one API endpoint to POST an image and check if it is an actual grayscale image (encoded as a grayscale image).
+We indeed did not develop a feature to catch grayish images encoded as RGB ones.
+
+This Flask app was deployed on Heroku (Free Tier plan) and is accessible [here](http://www.google.com). Note that there 
+is no GPU available for inference and that it might take a few seconds for the server to reboot.
+
+
+You can directly call the API with `curl`:
+```bash
+curl -X POST -F "image=@api/gray.jpeg" http://127.0.0.1:5000/check_image
+
+curl -X POST -F "image=@api/gray.jpeg" http://127.0.0.1:5000/colorize
+```
+
+You can also deploy on your local machine:
+
+```
+python api/app.py
+
+---------------------------------------------------------------------
+
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+```
 
 
 ## Reproduce the project
