@@ -6,7 +6,7 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)]()
 
 
-<img src = "/media/color_evolution.gif" height="250"> <img src = "/media/examples.gif" height="250">
+<img src = "/media/color_evolution.gif" height="250">       <img src = "/media/examples.gif" height="250">
 
 ## The project
 
