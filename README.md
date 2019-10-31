@@ -100,10 +100,32 @@ We also tried our model on an example that was not in the training set, as expec
 
 ### Training on a bigger dataset
 
+We eventually trained our model on a bigger dataset, we sampled 2000 images from the LFW dataset and trained it for ~6h 
+(I believe that a significant amount of this time is due to the model checkpoints (we saved the model after each epoch -
+ don't do this if not needed) on Google Colab. Colab only offered us a single GPU with limited memory (it could fit our
+models - the generator being the heaviest one - and a batch of only 16 images of size 512x512).
+
+The final configuration parameters we used are:
+
+```python
+config = Config(
+    lr_dis = 0.000001,
+    lr_gen = 0.00001,
+    n_epochs = 90,
+    batch_size = 16,
+)
+``` 
+
+Some nice results:
+
+- Again, we obtained the typical loss curve of a GAN training :
 
 <img src = "/colorful_world/results/loss_graph.png" height="200">
 
-<img src = "/colorful_world/results/color_evolution/colorization_training.gif" height="200">
+- We visualized the evolution during training of the colorization of an example from outside the train set:
+
+<img src = "/colorful_world/media/color_evolution.gif" height="250">
+
 
 ## Model deployment
 
