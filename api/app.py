@@ -39,14 +39,20 @@ def check_image():
 def test():
     if request.files.get("image"):
 
-        image = request.files["image"].read()
-        image = Image.open(io.BytesIO(image))
-        input_array = np.asarray(image)
+        input_img = request.files["image"].read()
+        input_img = Image.open(io.BytesIO(input_img))
 
-        return jsonify({
-            "image_shape": input_array.shape,
-            "is_grayscale_image": len(input_array.shape) == 2,
-        })
+        input_img = input_img.resize((IMAGE_SIZE, IMAGE_SIZE))
+
+        input_img_array = np.asarray(input_img)
+
+        output_img = Image.fromarray(input_img_array)
+
+        output_img_io = io.BytesIO()
+        output_img.save(output_img_io, 'PNG')
+        output_img_io.seek(0)
+
+        return send_file(output_img_io, mimetype='image/png')
 
 
 @app.route('/colorize', methods=['POST'])
@@ -79,7 +85,7 @@ def colorize():
 
         output_img = output_img.resize(input_img_shape)
 
-        output_img_io = io.StringIO()
+        output_img_io = io.BytesIO()
         output_img.save(output_img_io, 'PNG')
         output_img_io.seek(0)
 

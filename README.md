@@ -93,7 +93,7 @@ at ~100 epochs | right: training for 1000 epochs):
 <img src = "/media/first_results/img_1_early_stopping.png" height="100"> <img src = "/media/first_results/img_1_generated.png" height="100">
 
 
-We also tried our model on an example that was not in the training set, as expected the results are less convincing due to the model's overfitting:
+We also tried our model on an example that was not in the training set, as expected the results are slightly less convincing due to the model's overfitting:
 
 <img src = "/media/first_results/test_img_generated.png" height="100"><img src = "/media/first_results/test_img_original.jpg" height="100">
 
@@ -122,13 +122,13 @@ You can directly call the API with `curl`:
 ```bash
 curl -X POST -F "image=@api/gray.jpeg" http://127.0.0.1:5000/check_image
 
-curl -X POST -F "image=@api/gray.jpeg" http://127.0.0.1:5000/colorize
+curl -X POST -F "image=@api/gray.jpeg" http://127.0.0.1:5000/colorize -o "test.png"
 ```
 
 You can also deploy on your local machine:
 
 ```
-python api/app.py
+python3 api/app.py
 
 ---------------------------------------------------------------------
 
@@ -180,11 +180,9 @@ TBC ...
 # TODO:
 
 - Model:
-    - Checkpoints often
     - Train on the full dataset & Get nice results
 
 - IT:
-    - Make a simple Flask API (predict and that's all)
     - deploy on Heroku if not too slow / or test another ML service
 
 
