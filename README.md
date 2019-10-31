@@ -8,6 +8,8 @@
 
 <img src = "/media/color_evolution.gif" height="250">       <img src = "/media/examples.gif" height="250">
 
+**Currently in progress:** Heroku deployment
+
 ## The project
 
 The objective of this project is to translate gray-scale pictures into their colorized version. The problem consists in learning
@@ -148,9 +150,11 @@ is no GPU available for inference and that it might take a few seconds for the s
 
 You can directly call the API with `curl`:
 ```bash
-curl -X POST -F "image=@api/gray.jpeg" http://127.0.0.1:5000/check_image
+curl -X POST -F "image=@src_image_path.jpg" http://127.0.0.1:5000/colorize -o "dst_image_path.png"
 
-curl -X POST -F "image=@api/gray.jpeg" http://127.0.0.1:5000/colorize -o "test.png"
+curl -X POST -F "image=@src_image_path.jpeg" http://127.0.0.1:5000/colorize -o "dst_image_path.png"
+
+curl -X POST -F "image=@src_image_path.jpg" http://127.0.0.1:5000/colorize -o "dst_image_path.png"
 ```
 
 You can also deploy on your local machine:
@@ -203,15 +207,6 @@ config = Config(
 4/ APIze and deploy the model
 
 TBC ...
-
-
-# TODO:
-
-- Model:
-    - Train on the full dataset & Get nice results
-
-- IT:
-    - deploy on Heroku if not too slow / or test another ML service
 
 
 ## Resources:
