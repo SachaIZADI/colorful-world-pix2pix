@@ -4,16 +4,18 @@ import io
 import numpy as np
 import torch
 
+import sys
+sys.path.append(".")
+
 
 app = Flask(__name__)
 
 IMAGE_SIZE = 512
 
 # TODO: here
-#PATH_TO_MODEL = "../colorful_world/models_saved/xxx.pkl"
-#generator = torch.load(PATH_TO_MODEL)
-
-generator = None
+PATH_TO_MODEL = "./api/model/gen_model_epoch_59_cpu.pk"
+generator = torch.load(PATH_TO_MODEL)
+generator.eval()
 
 
 @app.route('/', methods=['GET'])
@@ -67,19 +69,17 @@ def colorize():
 
         input_img_array = np.asarray(input_img)
 
-        if len(input_img_array.shape) != 2:
-            response = jsonify({
-                "message": "Your image is not a real grayscale image. Please change format."
-            })
-            response.status_code = 401
-            return response
+        if len(input_img_array.shape) > 2:
+            input_img_array = input_img_array[:,:,0]
 
         input_img_array_scaled = ((input_img_array / 256) - 0.5) * 2.0
-        input_tensor = torch.from_numpy(input_img_array_scaled).type(torch.FloatTensor).unsqueeze(0)
 
-        output_tensor = generator(input_tensor)
+        with torch.no_grad():
 
-        output_img_array_scaled = output_tensor.cpu().numpy()[0].transpose(1, 2, 0)
+            input_tensor = torch.from_numpy(input_img_array_scaled).type(torch.FloatTensor).unsqueeze(0).unsqueeze(0)
+            output_tensor = generator(input_tensor)
+            output_img_array_scaled = output_tensor.cpu().numpy()[0].transpose(1, 2, 0)
+
         output_img_array = (((output_img_array_scaled / 2.0 + 0.5) * 256).astype('uint8'))
         output_img = Image.fromarray(output_img_array)
 
@@ -102,4 +102,4 @@ def colorize():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

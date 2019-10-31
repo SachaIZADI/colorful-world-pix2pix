@@ -5,3 +5,4 @@
 **/to_predict/*.png
 **/to_predict/*.jpg
 **lfw_medium/
+**/api/model/

@@ -6,6 +6,8 @@
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)]()
 
 
+<img src = "/media/color_evolution.gif" height="250"> <img src = "/media/examples.gif" height="250">
+
 ## The project
 
 The objective of this project is to translate gray-scale pictures into their colorized version. The problem consists in learning
@@ -136,8 +138,9 @@ We developed a [Flask app](https://github.com/SachaIZADI/colorful-world-pix2pix/
 It offers: 
 - a very basic front-end to have a simple UI to play with the model
 - one API endpoint to POST a grayscale image and get its colorized version
-- one API endpoint to POST an image and check if it is an actual grayscale image (encoded as a grayscale image).
-We indeed did not develop a feature to catch grayish images encoded as RGB ones.
+- one API endpoint to POST an image and check if it is an actual grayscale image (encoded as a grayscale 8-bit image).
+We did implement a feature to catch grayish images encoded as RGB ones, but the model is supposed to take grayscale 8-bit
+encoded images only as inputs.
 
 This Flask app was deployed on Heroku (Free Tier plan) and is accessible [here](http://www.google.com). Note that there 
 is no GPU available for inference and that it might take a few seconds for the server to reboot.
