@@ -122,7 +122,7 @@ Our results:
 
 <img src = "/media/loss_curve.png" height="200">
 
-- We visualized the evolution during training of the colorization of an example from outside the train set. We clearly see the 
+- We visualized the evolution during training of the colorization of an example from outside the train set.
 
 <img src = "/media/color_evolution.gif" height="250">
 
