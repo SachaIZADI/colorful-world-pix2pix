@@ -8,7 +8,9 @@
 
 <img src = "/media/color_evolution.gif" height="250">       <img src = "/media/examples.gif" height="250">
 
-**Currently in progress:** Heroku deployment
+**Currently in progress:** 
+- Heroku deployment
+- Colab Notebook Cleaning
 
 ## The project
 
@@ -184,7 +186,8 @@ pip install -r requirements.txt
 
 2/ Download the data
 ```
-cd colorful_world/data/download_data.sh
+cd colorful_world/data
+download_data.sh
 cd ..
 cd ..
 ```
@@ -194,21 +197,22 @@ cd ..
 We strongly advise you to use a GPU to train the model from scratch. Hopefully, Google Colab has your back if you want 
 to have access to a free GPU. You just need to follow the steps mentioned in the Colab notebok: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SachaIZADI/colorful-world-pix2pix/blob/master/pix2pix.ipynb)
 
-We eventually trained our final model with these settings:
+We did not train our model in a fully satisfying way, but we would recommend using these parameters:
 
 ```python
 config = Config(
-    a=1,
-    b=2,
-    c=3,
+    lr_dis = 1e-6,
+    lr_gen = 1e-5,
+    n_epochs = 200,
+    batch_size = 32,
 )
 ``` 
 
-4/ APIze and deploy the model
-
-TBC ...
-
-
-## Resources:
-- https://medium.com/@utk.is.here/keep-calm-and-train-a-gan-pitfalls-and-tips-on-training-generative-adversarial-networks-edd529764aa9
-- https://github.com/soumith/ganhacks
+4/ Download our pre-trained model (60 epochs on 2000 examples from LFW)
+```
+cd colorful_world/api/model
+download_model.sh
+cd ..
+cd ..
+cd ..
+```
