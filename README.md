@@ -9,8 +9,8 @@
 <img src = "/media/color_evolution.gif" height="250">       <img src = "/media/examples.gif" height="250">
 
 **Currently in progress:** 
-- Simple web interface for calling the model
 - Colab Notebook Cleaning
+- Train the model for more epochs
 
 ## The project
 
@@ -137,6 +137,8 @@ are worse captured by the model than cheeks or hair. Another hint is that the lo
 
 
 ## Model deployment
+
+<img src = "/media/website_1.png" height="300"> <img src = "/media/website_2.png" height="300">
 
 We developed a [Flask app](https://github.com/SachaIZADI/colorful-world-pix2pix/tree/master/api) to deploy the generator model.
 It offers: 
