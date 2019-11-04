@@ -20,7 +20,7 @@ try:
 except FileNotFoundError:
     url = "https://www.dropbox.com/s/h302ei5jctwp4m6/gen_model_epoch_59_cpu.pk"
     r = requests.get(url)
-    with open(PATH_TO_MODEL, "wb") as f:
+    with open(PATH_TO_MODEL, "w") as f:
         f.write(r.content)
     generator = torch.load(PATH_TO_MODEL)
 
