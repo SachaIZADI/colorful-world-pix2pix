@@ -138,7 +138,7 @@ are worse captured by the model than cheeks or hair. Another hint is that the lo
 
 ## Model deployment
 
-<img src = "/media/website_1.png" height="300"> <img src = "/media/website_2.png" height="300">
+<img src = "/media/website_1.png" height="300"> --> <img src = "/media/website_2.png" height="300">
 
 We developed a [Flask app](https://github.com/SachaIZADI/colorful-world-pix2pix/tree/master/api) to deploy the generator model.
 It offers: 
