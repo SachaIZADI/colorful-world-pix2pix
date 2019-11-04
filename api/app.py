@@ -7,6 +7,9 @@ import torch
 import sys
 sys.path.append(".")
 
+import os
+print(os.getcwd())
+
 
 app = Flask(__name__)
 
