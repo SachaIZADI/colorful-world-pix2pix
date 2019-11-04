@@ -8,8 +8,7 @@
 
 <img src = "/media/color_evolution.gif" height="250">       <img src = "/media/examples.gif" height="250">
 
-**Currently in progress:** 
-- Colab Notebook Cleaning
+**TODO:** 
 - Train the model for more epochs
 
 ## The project
@@ -159,11 +158,7 @@ curl -X GET https://colorful-world.herokuapp.com/ping
 
 You can directly call the API with `curl`:
 ```bash
-curl -X POST -F "image=@src_image_path.jpg" https://colorful-world.herokuapp.com/colorize -o "dst_image_path.png"
-
-curl -X POST -F "image=@src_image_path.jpeg" https://colorful-world.herokuapp.com/colorize -o "dst_image_path.png"
-
-curl -X POST -F "image=@src_image_path.jpg" https://colorful-world.herokuapp.com/colorize -o "dst_image_path.png"
+curl -X POST -F "image=@src_image_path.jpg/png/jpeg" https://colorful-world.herokuapp.com/colorize -o "dst_image_path.png"
 ```
 
 You can also deploy on your local machine:
