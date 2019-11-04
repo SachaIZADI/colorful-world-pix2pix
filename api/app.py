@@ -34,7 +34,7 @@ def home():
 
 
 @app.route('/ping', methods=['GET'])
-def home():
+def ping():
     return jsonify({"message": "Ping!"})
 
 
