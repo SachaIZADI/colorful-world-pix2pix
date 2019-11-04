@@ -2,14 +2,12 @@ cachetools==3.1.1
 Click==7.0
 cycler==0.10.0
 Flask==1.1.1
-graphviz==0.13
 gunicorn==19.9.0
 httplib2==0.14.0
 itsdangerous==1.1.0
 Jinja2==2.10.3
 kiwisolver==1.1.0
 MarkupSafe==1.1.1
-matplotlib==3.1.1
 numpy==1.17.3
 Pillow==6.2.1
 pyasn1==0.4.7
@@ -19,7 +17,6 @@ python-dateutil==2.8.0
 PyYAML==5.1.2
 rsa==4.0
 six==1.12.0
-http://download.pytorch.org/whl/cu80/torch-0.3.0.post4-cp36-cp36m-linux_x86_64.whl 
-torchviz==0.0.1
+http://download.pytorch.org/whl/cu80/torch-0.3.0.post4-cp36-cp36m-linux_x86_64.whl
 uritemplate==3.0.0
 Werkzeug==0.16.0
