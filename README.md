@@ -1,6 +1,6 @@
 # Colorful world - pix2pix implementation
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://google.com)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://colorful-world.herokuapp.com/)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SachaIZADI/colorful-world-pix2pix/blob/master/pix2pix.ipynb)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)]()
@@ -9,7 +9,7 @@
 <img src = "/media/color_evolution.gif" height="250">       <img src = "/media/examples.gif" height="250">
 
 **Currently in progress:** 
-- Heroku deployment
+- Simple web interface for calling the model
 - Colab Notebook Cleaning
 
 ## The project
@@ -146,17 +146,22 @@ It offers:
 We did implement a feature to catch grayish images encoded as RGB ones, but the model is supposed to take grayscale 8-bit
 encoded images only as inputs.
 
-This Flask app was deployed on Heroku (Free Tier plan) and is accessible [here](http://www.google.com). Note that there 
+This Flask app was deployed on Heroku (Free Tier plan) and is accessible [here](https://colorful-world.herokuapp.com/). Note that there 
 is no GPU available for inference and that it might take a few seconds for the server to reboot.
 
+You should first ping the server by hitting the `/ping` endpoint:
+
+```bash
+curl -X GET https://colorful-world.herokuapp.com/ping
+```
 
 You can directly call the API with `curl`:
 ```bash
-curl -X POST -F "image=@src_image_path.jpg" http://127.0.0.1:5000/colorize -o "dst_image_path.png"
+curl -X POST -F "image=@src_image_path.jpg" https://colorful-world.herokuapp.com/colorize -o "dst_image_path.png"
 
-curl -X POST -F "image=@src_image_path.jpeg" http://127.0.0.1:5000/colorize -o "dst_image_path.png"
+curl -X POST -F "image=@src_image_path.jpeg" https://colorful-world.herokuapp.com/colorize -o "dst_image_path.png"
 
-curl -X POST -F "image=@src_image_path.jpg" http://127.0.0.1:5000/colorize -o "dst_image_path.png"
+curl -X POST -F "image=@src_image_path.jpg" https://colorful-world.herokuapp.com/colorize -o "dst_image_path.png"
 ```
 
 You can also deploy on your local machine:
@@ -188,8 +193,6 @@ pip install -r requirements.txt
 ```
 cd colorful_world/data
 download_data.sh
-cd ..
-cd ..
 ```
 
 3/ Train a model
@@ -209,20 +212,21 @@ config = Config(
 ``` 
 
 4/ Download our pre-trained model (60 epochs on 2000 examples from LFW)
-```
+```bash
 cd colorful_world/api/model
 download_model.sh
-cd ..
-cd ..
-cd ..
 ```
 
 5/ Deploying on Heroku
 
-```
-heroku create colorful-world
+```bash
+heroku create [YOUR PROJECT NAME]
 git push heroku master
-heroku ps:scale web=1
+```
 
+*Note to myself - other useful Heroku commands*
+
+```bash
+heroku ps:scale web=1
 heroku run bash
 ```
