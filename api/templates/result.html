@@ -3,14 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Colorful World</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 
-    <h1> Colorful World </h1>
-    <a class="github-button" href="https://github.com/SachaIZADI/colorful-world-pix2pix" aria-label="View on GitHub">View project on GitHub</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">
+            <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/google/56/artist-palette_1f3a8.png" width="30" height="30" alt="">
+            Colorful World
+        </a>
+        <a class="github-button" href="https://github.com/SachaIZADI/colorful-world-pix2pix" aria-label="View on GitHub">View project on GitHub</a>
+        <a class="nav-link" href="/">Try again!</a>
+    </nav>
+
+    <br>
 
 
-    <h3><img src="data:image/png;base64, {{photo}}" width="50%"></h3>
+    <div>
+        <img src="data:image/png;base64, {{photo}}" height="500">
+    </div>
 
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -40,12 +40,12 @@ def home():
 @app.route('/result', methods=['POST'])
 def result_page():
     output_img_io = colorizer(request=request, img_name="img")
-    print(output_img_io)
-    jpg_as_text = base64.b64encode(output_img_io.read())
-
+    jpg_as_text = base64.b64encode(output_img_io.getvalue()).decode()
     return render_template('result.html', photo=jpg_as_text)
 
+
 # ---------------------------------------
+
 
 @app.route('/ping', methods=['GET'])
 def ping():
