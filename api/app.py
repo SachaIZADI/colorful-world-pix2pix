@@ -3,10 +3,11 @@ from PIL import Image
 import io
 import numpy as np
 import torch
-import urllib.request
+import requests
+
 import sys
 sys.path.append(".")
-from colorful_world.models import Generator
+
 
 app = Flask(__name__)
 
@@ -18,25 +19,23 @@ try:
     generator = torch.load(PATH_TO_MODEL)
 
 except FileNotFoundError:
-    # TODO: doesn't work
-    url = "https://www.dropbox.com/s/h302ei5jctwp4m6/gen_model_epoch_59_cpu.pk"
-    urllib.request.urlretrieve(url, PATH_TO_MODEL)
+    url = "https://www.dropbox.com/s/h302ei5jctwp4m6/gen_model_epoch_59_cpu.pk?dl=1"
+    r = requests.get(url)
+    with open(PATH_TO_MODEL, "wb") as f:
+        f.write(r.content)
     generator = torch.load(PATH_TO_MODEL)
 
 generator.eval()
 
 
-# TODO: save the model
-torch.save(model.state_dict(), PATH)
-
-generator = Generator()
-model.load_state_dict(torch.load(PATH))
-model.eval()
-
-
 @app.route('/', methods=['GET'])
 def home():
     return jsonify({"message": "Hello world"})
+
+
+@app.route('/ping', methods=['GET'])
+def home():
+    return jsonify({"message": "Ping!"})
 
 
 @app.route('/check_image', methods=['POST'])
