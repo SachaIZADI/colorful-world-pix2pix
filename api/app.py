@@ -3,7 +3,7 @@ from PIL import Image
 import io
 import numpy as np
 import torch
-import requests
+from urllib.request import urlopen
 
 import sys
 sys.path.append(".")
@@ -19,10 +19,7 @@ try:
 
 except FileNotFoundError:
     url = "https://www.dropbox.com/s/h302ei5jctwp4m6/gen_model_epoch_59_cpu.pk"
-    r = requests.get(url)
-    with open(PATH_TO_MODEL, "w") as f:
-        f.write(r.content)
-    generator = torch.load(PATH_TO_MODEL)
+    generator = torch.load(urlopen(url))
 
 generator.eval()
 
