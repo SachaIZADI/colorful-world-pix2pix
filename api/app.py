@@ -3,25 +3,35 @@ from PIL import Image
 import io
 import numpy as np
 import torch
-from urllib.request import urlopen
-
+import urllib.request
 import sys
 sys.path.append(".")
+from colorful_world.models import Generator
 
 app = Flask(__name__)
 
 IMAGE_SIZE = 512
 
-PATH_TO_MODEL = "./api/model/gen_model_epoch_59_cpu.pk"
+PATH_TO_MODEL = "./api/model/gen_model_epoch_5_cpu.pk"
 
 try:
     generator = torch.load(PATH_TO_MODEL)
 
 except FileNotFoundError:
+    # TODO: doesn't work
     url = "https://www.dropbox.com/s/h302ei5jctwp4m6/gen_model_epoch_59_cpu.pk"
-    generator = torch.load(urlopen(url))
+    urllib.request.urlretrieve(url, PATH_TO_MODEL)
+    generator = torch.load(PATH_TO_MODEL)
 
 generator.eval()
+
+
+# TODO: save the model
+torch.save(model.state_dict(), PATH)
+
+generator = Generator()
+model.load_state_dict(torch.load(PATH))
+model.eval()
 
 
 @app.route('/', methods=['GET'])
