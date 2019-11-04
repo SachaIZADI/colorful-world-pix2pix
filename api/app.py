@@ -9,6 +9,8 @@ import base64
 import sys
 sys.path.append(".")
 
+from api.utils import exif_transpose
+
 
 app = Flask(__name__)
 
@@ -86,6 +88,8 @@ def colorize():
 def colorizer(request, img_name="image"):
     input_img = request.files[img_name].read()
     input_img = Image.open(io.BytesIO(input_img))
+
+    input_img = exif_transpose(input_img)
 
     input_img_shape = input_img.size
     input_img = input_img.resize((IMAGE_SIZE, IMAGE_SIZE))
