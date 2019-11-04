@@ -229,4 +229,6 @@ git push heroku master
 ```bash
 heroku ps:scale web=1
 heroku run bash
+heroku login
+heroku logout
 ```
