@@ -20,7 +20,6 @@ PyYAML==5.1.2
 rsa==4.0
 six==1.12.0
 http://download.pytorch.org/whl/cu80/torch-0.3.0.post4-cp36-cp36m-linux_x86_64.whl 
-torchvision==0.4.1.post2
 torchviz==0.0.1
 uritemplate==3.0.0
 Werkzeug==0.16.0
