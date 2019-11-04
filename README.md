@@ -218,7 +218,9 @@ cd ..
 ```
 
 5/ Deploying on Heroku
+
 ```
 heroku create colorful-world
 git push heroku master
+heroku ps:scale web=1
 ```
