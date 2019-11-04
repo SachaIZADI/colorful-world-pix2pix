@@ -13,7 +13,7 @@ app = Flask(__name__)
 
 IMAGE_SIZE = 512
 
-PATH_TO_MODEL = "./api/model/gen_model_epoch_5_cpu.pk"
+PATH_TO_MODEL = "./api/model/gen_model_epoch_59_cpu.pk"
 
 try:
     generator = torch.load(PATH_TO_MODEL)
