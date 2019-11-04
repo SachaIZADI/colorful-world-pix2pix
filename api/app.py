@@ -3,31 +3,27 @@ from PIL import Image
 import io
 import numpy as np
 import torch
+import requests
 
 import sys
 sys.path.append(".")
-
-import os
-try:
-    print(".: ", os.listdir("."))
-except:
-    pass
-try:
-    print("./api/: ", os.listdir("./api/"))
-except:
-    pass
-try:
-    print("./api/model/: ",os.listdir("./api/model/"))
-except:
-    pass
-
 
 app = Flask(__name__)
 
 IMAGE_SIZE = 512
 
 PATH_TO_MODEL = "./api/model/gen_model_epoch_59_cpu.pk"
-generator = torch.load(PATH_TO_MODEL)
+
+try:
+    generator = torch.load(PATH_TO_MODEL)
+
+except FileNotFoundError:
+    url = "https://www.dropbox.com/s/h302ei5jctwp4m6/gen_model_epoch_59_cpu.pk"
+    r = requests.get(url)
+    with open(PATH_TO_MODEL, "wb") as f:
+        f.write(r.content)
+    generator = torch.load(PATH_TO_MODEL)
+
 generator.eval()
 
 

@@ -223,4 +223,6 @@ cd ..
 heroku create colorful-world
 git push heroku master
 heroku ps:scale web=1
+
+heroku run bash
 ```
