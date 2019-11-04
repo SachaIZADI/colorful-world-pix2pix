@@ -8,7 +8,18 @@ import sys
 sys.path.append(".")
 
 import os
-print(os.getcwd())
+try:
+    print(".: ", os.listdir("."))
+except:
+    pass
+try:
+    print("./api/: ", os.listdir("./api/"))
+except:
+    pass
+try:
+    print("./api/model/: ",os.listdir("./api/model/"))
+except:
+    pass
 
 
 app = Flask(__name__)
