@@ -45,9 +45,7 @@ class cGAN(object):
 
     def model_init(self):
         self.dis_model = Discriminator(image_size=self.config.image_size)
-
         self.gen_model = Generator()
-        self.gen_model = self.gen_model
 
         self.optimizer_dis = optim.Adam(self.dis_model.parameters(), lr=self.config.lr_dis)
         self.optimizer_gen = optim.Adam(self.gen_model.parameters(), lr=self.config.lr_gen)
