@@ -8,8 +8,6 @@
 
 <img src = "/media/color_evolution.gif" height="250">       <img src = "/media/examples.gif" height="250">
 
-**TODO:** 
-- Train the model for more epochs
 
 ## The project
 
